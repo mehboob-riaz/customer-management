@@ -18,6 +18,7 @@ Before you begin, ensure you have the following installed:
 ```bash
 git clone https://github.com/mehboob-riaz/customer-management.git
 cd customer-management
+git checkout develop
 ```
 
 ### Install PHP Dependencies
