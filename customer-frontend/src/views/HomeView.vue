@@ -48,18 +48,30 @@
           </q-td>
         </q-tr>
       </template>
-    </q-table>
 
-    <div class="row justify-center q-mt-md">
-      <q-pagination
-        v-model="pagination.page"
-        :max="totalPages"
-        :max-pages="5"
-        boundary-links
-        direction-links
-        @update:model-value="onPaginationChange"
-      />
-    </div>
+      <!-- Footer -->
+      <template v-slot:bottom>
+        <div class="q-pa-sm d-flex justify-center align-center">
+          <span class="text-white">
+            Showing {{ startEntry }} to {{ endEntry }} of {{ pagination.rowsNumber }} entries
+          </span>
+          <q-space />
+          <div class="row justify-center">
+            <q-pagination
+              v-model="pagination.page"
+              :max="totalPages"
+              :max-pages="5"
+              direction-links
+              @update:model-value="onPaginationChange"
+              push
+              color="primary"
+              active-design="push"
+              active-color="secondary"
+            />
+          </div>
+        </div>
+      </template>
+    </q-table>
   </div>
 </template>
 
@@ -96,6 +108,14 @@ const getSortIcon = (columnName) => {
   if (pagination.value.sortBy !== columnName) return 'arrow_upward'
   return pagination.value.descending ? 'arrow_downward' : 'arrow_upward'
 }
+
+const startEntry = computed(() => {
+  return (pagination.value.page - 1) * pagination.value.rowsPerPage + 1
+})
+
+const endEntry = computed(() => {
+  return Math.min(pagination.value.page * pagination.value.rowsPerPage, pagination.value.rowsNumber)
+})
 
 const onSort = (columnName) => {
   console.log('onSort', columnName)

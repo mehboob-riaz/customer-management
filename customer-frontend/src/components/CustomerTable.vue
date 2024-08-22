@@ -10,7 +10,9 @@
       class="my-sticky-header-table"
       flat
       bordered
+      :pagination-label="paginationLabel"
     >
+      <!--  -->
       <!-- @request="onRequest" -->
       <template v-slot:header="props">
         <q-tr :props="props">
@@ -47,6 +49,16 @@
           </q-td>
         </q-tr>
       </template>
+
+      <!-- Footer -->
+      <!-- <template v-slot:bottom>
+        <div class="q-pa-sm">
+          <q-space />
+          <span class="text-white">
+            Showing {{ startEntry }} to {{ endEntry }} of {{ pagination.rowsNumber }} entries
+          </span>
+        </div>
+      </template> -->
     </q-table>
 
     <div class="row justify-center q-mt-md">
@@ -96,6 +108,9 @@ const getSortIcon = (columnName) => {
   return pagination.value.descending ? 'arrow_downward' : 'arrow_upward'
 }
 
+const paginationLabel = (firstRowIndex, endRowIndex, totalRowsNumber) => {
+  return `Showing ${firstRowIndex + 1} to ${endRowIndex} of ${totalRowsNumber} entries`
+}
 const onSort = (columnName) => {
   console.log('onSort', columnName)
   const isDescending = pagination.value.sortBy === columnName ? !pagination.value.descending : false
